@@ -1,39 +1,12 @@
 const express  = require('express');
 const { Configuration, OpenAIApi } = require('openai') 
+const dotenv = require('dotenv')
 const cors = require('cors')
 const Completion = require('./Routes/Routes')
 
 const app = express();
 
 app.use(express.json())
-
-// const { Configuration, OpenAIApi } = require("openai");
-const configuration = new Configuration({
-    apiKey: "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"
-});
-const openai = new OpenAIApi(configuration);
-
-app.post('/api/v1/start', async (request, response) => {
-    try{
-        const Response = await openai.createCompletion({
-                    model: "text-davinci-003",
-                    prompt: "is this ChatGPT    ",
-                    max_tokens: 7,
-                    temperature: 0,
-                  })
-     const mainResponse = Response.data.choices[0].text;
-        response.status(200)
-        .json({
-            mainResponse
-        })
-    } catch (error){
-        console.log(error)
-        response.status(400)
-        .json({
-            message: "API not working"
-        })
-    }
-})
 app.use(cors())
 
 app.get('/', (request, response) => {
@@ -58,7 +31,7 @@ const port = 8000
 dotenv.config({ path: './config.env' })
 
 app.listen( port , () => {
+    // console.log(process.env.OPENAI_API_KEY)
     console.log(`Application running at ${port} 😁😁😁...` )
 })
 
-module.exports = app;
