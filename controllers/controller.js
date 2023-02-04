@@ -1,5 +1,4 @@
 const openAi = require('../ultis/openai')
-const factory = require('./handlerFunction')
 
 exports.Completion = async ( request, response ) => {
     try{

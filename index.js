@@ -3,6 +3,7 @@ const { Configuration, OpenAIApi } = require('openai')
 const dotenv = require('dotenv')
 const cors = require('cors')
 const Completion = require('./Routes/Routes')
+dotenv.config({ path: './config.env' })
 
 const app = express();
 
@@ -18,6 +19,35 @@ app.get('/', (request, response) => {
 
 app.use('/api/v1', Completion)
 
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+app.post('/api/v1/test', async (request, response) => {
+    try{
+        const Response = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: "Say this is a test",
+            max_tokens: 7,
+            temperature: 0,
+          });
+          console.log(Response.data)
+
+        response.status(200) 
+        .json({
+            message:"API is working"
+        }) 
+
+    } catch(error) {
+        // console.log(error)
+        response.status(400)
+        .json({
+            message: error
+        })
+    }
+})
+
+
 app.use('*', (request, response) => {
     response.status(404)
     .json({
@@ -28,7 +58,6 @@ app.use('*', (request, response) => {
 
 const port = 8000
 
-dotenv.config({ path: './config.env' })
 
 app.listen( port , () => {
     // console.log(process.env.OPENAI_API_KEY)
