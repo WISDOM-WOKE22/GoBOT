@@ -53,4 +53,12 @@ app.use('*', (request, response) => {
     })
 })
 
+const port = 8000
+
+dotenv.config({ path: './config.env' })
+
+app.listen( port , () => {
+    console.log(`Application running at ${port} 😁😁😁...` )
+})
+
 module.exports = app;
