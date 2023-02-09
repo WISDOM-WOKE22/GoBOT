@@ -1,11 +1,12 @@
-const openAi = require('../ultis/openai')
+const openAi = require('../ultis/openai');
+const ErrorHandler = require('../ultis/Errorhandler')
 
 exports.Completion = async ( request, response ) => {
     try{
         const Response = await openAi.createCompletion({
           model: "text-davinci-003",
           prompt: request.body.chat,
-          max_tokens: 100,
+          max_tokens: 1000,
           temperature: 0,
         })
         const GoBOT = Response.data.choices[0].text
@@ -18,12 +19,7 @@ exports.Completion = async ( request, response ) => {
             }
           })
     } catch (error) {
-        response.status(400)
-        .json({
-            status: 'fail',
-            message: error
-        })
-    }
+      ErrorHandler(response, error)
 }
 
 
@@ -38,7 +34,7 @@ exports.SteveJobs = async ( request, response ) => {
       steve: you are great and can start your own business.
       person: ${ request.body.chat}
       `,
-      max_tokens: 100,
+      max_tokens: 1000,
       temperature: 0,
     })
     const GoBOT = Response.data.choices[0].text
@@ -51,11 +47,7 @@ exports.SteveJobs = async ( request, response ) => {
         }
       })
   } catch (error) {
-    response.status(400)
-    .json({
-        status: 'fail',
-        message: error
-    })
+    ErrorHandler(response, error)
   }
 };
 
@@ -70,7 +62,7 @@ exports.grammarCorrector = async (request, response ) => {
       tool: how are you.
       person: ${ request.body.chat}
       `,
-      max_tokens: 100,
+      max_tokens: 1000,
       temperature: 0.3,
     })
     const GoBOT = Response.data.choices[0].text
@@ -83,11 +75,7 @@ exports.grammarCorrector = async (request, response ) => {
         }
       })
   } catch (error) {
-    response.status(400)
-    .json({
-        status: 'fail',
-        message: error
-    })
+    ErrorHandler(response, error)
   }
 };
 
@@ -103,7 +91,7 @@ exports.mathsInstructor = async (request, response ) => {
       instructor: 400.
       person: ${ request.body.chat}
       `,
-      max_tokens: 100,
+      max_tokens: 1000,
       temperature: 0.5,
     })
     const GoBOT = Response.data.choices[0].text
@@ -116,11 +104,7 @@ exports.mathsInstructor = async (request, response ) => {
         }
       })
   } catch (error) {
-    response.status(400)
-    .json({
-        status: 'fail',
-        message: error
-    })
+    ErrorHandler(response, error)
   }
 }
 
@@ -135,7 +119,7 @@ exports.languageTranslator = async (request, response ) => {
       translator:it is bonjour in french.
       person: ${ request.body.chat}
       `,
-      max_tokens: 100,
+      max_tokens: 1000,
       temperature: 0.5,
     })
     const GoBOT = Response.data.choices[0].text
@@ -148,11 +132,7 @@ exports.languageTranslator = async (request, response ) => {
         }
       })
   } catch (error) {
-    response.status(400)
-    .json({
-        status: 'fail',
-        message: error
-    })
+    ErrorHandler(response, error)
   }
 }
 
@@ -169,7 +149,7 @@ exports.jarvis = async (request, response ) => {
       jarvis: the first president of USA was George Washington. He was appointed president on the 30th of April 1789
       person: ${ request.body.chat}
       `,
-      max_tokens: 100,
+      max_tokens: 1000,
       temperature: 0.7,
     })
     const GoBOT = Response.data.choices[0].text
@@ -182,11 +162,7 @@ exports.jarvis = async (request, response ) => {
         }
       })
   } catch (error) {
-    response.status(400)
-    .json({
-        status: 'fail',
-        message: error
-    })
+    ErrorHandler(response, error)
   }
 };
 
@@ -204,7 +180,7 @@ exports.javaScriptInstructor = async (request, response ) => {
       jarvis: the first president of USA was George Washington. He was appointed president on the 30th of April 1789
       person: ${ request.body.chat}
       `,
-      max_tokens: 100,
+      max_tokens: 1000,
       temperature: 0.7,
     })
     const GoBOT = Response.data.choices[0].text
@@ -217,10 +193,6 @@ exports.javaScriptInstructor = async (request, response ) => {
         }
       })
   } catch (error) {
-    response.status(400)
-    .json({
-        status: 'fail',
-        message: error
-    })
+    ErrorHandler(response, error)
   }
-}
+}}
